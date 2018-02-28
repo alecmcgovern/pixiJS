@@ -1,14 +1,15 @@
-import React, { Component } from 'react';
+import React from 'react';
 import * as PIXI from 'pixi.js';
 
 import mars from './images/mars.png';
 import './filter.css';
 
-class Filter extends Component {
+class Filter extends React.Component {
 	constructor( props ) { 
 		super(props);
 		
 		this.animate = this.animate.bind(this);
+		this.marsImage = mars;
 	}
 
 	componentDidMount() {
@@ -16,15 +17,14 @@ class Filter extends Component {
 		this.app.renderer.backgroundColor = 0x7F0000FF;
 		this.refs.filter.appendChild(this.app.view);
 
-		this.stage = new PIXI.Container();
-		this.stage.width = 500;
-		this.stage.height = 375;
+		this.app.stage.width = 500;
+		this.app.stage.height = 375;
 
-		PIXI.loader.add(mars).load(() => {
+		PIXI.loader.add([this.marsImage]).load(() => {
 			this.sprite1 = new PIXI.Sprite(
-				PIXI.loader.resources[mars].texture
+				PIXI.loader.resources[this.marsImage].texture
 			);
-			this.stage.addChild(this.sprite1);
+			this.app.stage.addChild(this.sprite1);
 		});
 
 		this.animate();
@@ -35,13 +35,14 @@ class Filter extends Component {
 	}
 
 	animate() {
-		this.app.render(this.stage);
+		this.app.render(this.app.stage);
 		this.frame = requestAnimationFrame(this.animate);
 	}
 
 	render() {
 		return (
-			<div className="filter" ref="filter"></div>
+			<div className="filter" ref="filter">
+			</div>
 		);
 	}
 }

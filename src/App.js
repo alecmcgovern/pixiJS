@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Filter from "./filter.js";
 
 import './App.css';
 
-class App extends Component {
+class App extends React.Component {
 
     componentDidMount() {
         let video = this.refs.videoElement;
