@@ -1,9 +1,10 @@
 .App {
-  text-align: center;
+	display: flex;
+	justify-content: center;
 }
 
 .video {
-  width: 500px;
-  height: 375px;
-  background-color: #666;
+	width: 500px;
+	height: 375px;
+	background-color: #666;
 }

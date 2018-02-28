@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import Filter from "./filter.js";
+
 import './App.css';
 
 class App extends Component {
@@ -14,7 +16,7 @@ class App extends Component {
             })
             .catch(function(err) {
                 console.log(err);
-            });;
+            });
         } else {
             console.log("no media devices found");
         }
@@ -23,7 +25,8 @@ class App extends Component {
     render() {
         return (
             <div className="App">
-                <video className="video" ref="videoElement" autoplay="true"></video>
+                <video className="video" ref="videoElement" autoPlay="true"></video>
+                <Filter />
             </div>
         );
     }
