@@ -12,6 +12,100 @@ class Filter extends React.Component {
 		this.animate = this.animate.bind(this);
 		this.setup = this.setup.bind(this);
 		this.marsImage = mars;
+
+
+		// FILTERS //
+		this.filters = [
+			{	name: "Ascii Filter",
+				filter: new Filters.AsciiFilter()
+			},
+			{	name: "Adjustment Filter",
+				filter: new Filters.AdjustmentFilter({alpha: 0.5})
+			},
+			{	name: "Bevel Filter",
+				filter: new Filters.BevelFilter({thickness:10})
+			},
+			{
+				name: "Bloom Filter",
+				filter: new Filters.BloomFilter()
+			},
+			{	name: "Bulge Pinch Filter",
+				filter: new Filters.BulgePinchFilter()
+			},
+			{	name: "Color Map Filter",
+				filter: new Filters.ColorMapFilter()
+			},
+			{	name: "Color Replace Filter",
+				filter: new Filters.ColorReplaceFilter()
+			},
+			{	name: "Convolution Filter",
+				filter: new Filters.ConvolutionFilter()
+			},
+			{	name: "Cross Hatch Filter",
+				filter: new Filters.CrossHatchFilter()
+			},
+			{	name: "CRTFilter",
+				filter: new Filters.CRTFilter()
+			},
+			{	name: "Dot Filter",
+				filter: new Filters.DotFilter()
+			},
+			{	name: "Drop Shadow Filter",
+				filter: new Filters.DropShadowFilter()
+			},
+			{	name: "Emboss Filter",
+				filter: new Filters.EmbossFilter()
+			},
+			{	name: "Glitch Filter",
+				filter: new Filters.GlitchFilter()
+			},
+			{	name: "Glow Filter",
+				filter: new Filters.GlowFilter()
+			},
+			{	name: "GodrayFilter",
+				filter: new Filters.GodrayFilter()
+			},
+			{	name: "Kawase Blur Filter",
+				filter: new Filters.KawaseBlurFilter()
+			},
+			{	name: "Motion Blur Filter",
+				filter: new Filters.MotionBlurFilter()
+			},
+			// MultiColorReplaceFilter: new Filters.MultiColorReplaceFilter(),
+			{	name: "Old Film Filter",
+				filter: new Filters.OldFilmFilter()
+			},
+			{	name: "Outline Filter",
+				filter: new Filters.OutlineFilter()
+			},
+			{	name: "Pixelate Filter",
+				filter: new Filters.PixelateFilter()
+			},
+			{	name: "Radial Blur Filter",
+				filter: new Filters.RadialBlurFilter()
+			},
+			{	name: "Reflection Filter",
+				filter: new Filters.ReflectionFilter()
+			},
+			{	name: "RGB Split Filter",
+				filter: new Filters.RGBSplitFilter()
+			},
+			{	name: "Shockwave Filter",
+				filter: new Filters.ShockwaveFilter()
+			},
+			{	name: "Simple Lightmap Filter",
+				filter: new Filters.SimpleLightmapFilter()
+			},
+			{	name: "Tilt Shift Filter",
+				filter: new Filters.TiltShiftFilter()
+			},
+			{	name: "Twist Filter",
+				filter: new Filters.TwistFilter()
+			},
+			{	name: "Zoom Blur Filter",
+				filter: new Filters.ZoomBlurFilter()
+			}
+		]
 	}
 
 	componentDidMount() {
@@ -36,39 +130,6 @@ class Filter extends React.Component {
 		this.refs.filter.appendChild(this.app.view);
 
 		PIXI.loader.add([this.marsImage]).load(this.setup);
-
-
-		// FILTERS //
-		this.AsciiFilter = new Filters.AsciiFilter();
-		this.AdjustmentFilter = new Filters.AdjustmentFilter({alpha: 0.5});
-		this.BevelFilter = new Filters.BevelFilter({thickness:10});
-		this.BloomFilter = new Filters.BloomFilter();
-		this.BulgePinchFilter = new Filters.BulgePinchFilter();
-		this.ColorMapFilter = new Filters.ColorMapFilter();
-		this.ColorReplaceFilter = new Filters.ColorReplaceFilter();
-		this.ConvolutionFilter = new Filters.ConvolutionFilter();
-		this.CrossHatchFilter = new Filters.CrossHatchFilter();
-		this.CRTFilter = new Filters.CRTFilter();
-		this.DotFilter = new Filters.DotFilter();
-		this.DropShadowFilter = new Filters.DropShadowFilter();
-		this.EmbossFilter = new Filters.EmbossFilter();
-		this.GlitchFilter = new Filters.GlitchFilter();
-		this.GlowFilter = new Filters.GlowFilter();
-		this.GodrayFilter = new Filters.GodrayFilter();
-		this.KawaseBlurFilter = new Filters.KawaseBlurFilter();
-		this.MotionBlurFilter = new Filters.MotionBlurFilter();
-		// this.MultiColorReplaceFilter = new Filters.MultiColorReplaceFilter();
-		this.OldFilmFilter = new Filters.OldFilmFilter();
-		this.OutlineFilter = new Filters.OutlineFilter();
-		this.PixelateFilter = new Filters.PixelateFilter();
-		this.RadialBlurFilter = new Filters.RadialBlurFilter();
-		this.ReflectionFilter = new Filters.ReflectionFilter();
-		this.RGBSplitFilter = new Filters.RGBSplitFilter();
-		this.ShockwaveFilter = new Filters.ShockwaveFilter();
-		this.SimpleLightmapFilter = new Filters.SimpleLightmapFilter();
-		this.TiltShiftFilter = new Filters.TiltShiftFilter();
-		this.TwistFilter = new Filters.TwistFilter();
-		this.ZoomBlurFilter = new Filters.ZoomBlurFilter();
 	}
 
 	setup() {
@@ -89,7 +150,7 @@ class Filter extends React.Component {
 
 
 		this.app.stage.addChild(this.videoSprite);
-		this.videoSprite.filters = [this.DotFilter];
+		this.videoSprite.filters = [this.filters[0].filter];
 
 
 		this.animate();
@@ -110,6 +171,20 @@ class Filter extends React.Component {
 		this.frame = requestAnimationFrame(this.animate);
 	}
 
+	selectFilter(filter) {
+		this.videoSprite.filters = [filter];
+	}
+
+	renderFilterList() {
+		this.items = [];
+		for (let i = 0; i < this.filters.length; i++) {
+			// this.items.push(filter);
+			this.items.push(<div key={i} className="filter-option" onClick={() => this.selectFilter(this.filters[i].filter)}>{this.filters[i].name}</div>);
+		}
+
+		return this.items;
+	}
+
 	render() {
 		return (
 			<div className="filter-container">
@@ -117,7 +192,9 @@ class Filter extends React.Component {
 					<video className="video" ref="video" autoPlay="true"></video>
 					<div className="filter" ref="filter"></div>
 				</div>
-				<div className="filter-list-container"></div>
+				<div className="filter-list-container">
+					{this.renderFilterList()}
+				</div>
 			</div>
 		);
 	}

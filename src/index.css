@@ -3,3 +3,10 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
+
+.filter-option {
+	width: 40px;
+	height: 40px;
+
+	border: 1px dashed black;
+}
